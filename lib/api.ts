@@ -1,5 +1,5 @@
-import axios from "axios";
-import type { NewNote, Note } from "../types/note";
+import axios from 'axios';
+import type { NewNote, Note, NoteTag } from '../types/note';
 interface AxiosNotesResponse {
   notes: Note[];
   totalPages: number;
@@ -7,9 +7,9 @@ interface AxiosNotesResponse {
 const ITEMS_PER_PAGE = 12;
 const myKey = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 const api = axios.create({
-  baseURL: "https://notehub-public.goit.study/api",
+  baseURL: 'https://notehub-public.goit.study/api',
   headers: {
-    accept: "application/json",
+    accept: 'application/json',
     Authorization: `Bearer ${myKey}`,
   },
 });
@@ -18,18 +18,18 @@ export const fetchNotes = async (
   page: number,
   tag?: string
 ): Promise<AxiosNotesResponse> => {
-  const response = await api.get<AxiosNotesResponse>("/notes", {
+  const response = await api.get<AxiosNotesResponse>('/notes', {
     params: {
       page,
       perPage: ITEMS_PER_PAGE,
       ...(query.trim() ? { search: query } : {}),
-      ...(tag ? {tag} : {}),
+      tag: tag === 'all' || !tag ? undefined : tag,
     },
   });
   return response.data;
-}; 
+};
 export const createNote = async (note: NewNote): Promise<Note> => {
-  const response = await api.post<Note>("/notes", note);
+  const response = await api.post<Note>('/notes', note);
   return response.data;
 };
 export const deleteNote = async (id: string): Promise<Note> => {
