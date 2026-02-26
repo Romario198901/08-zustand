@@ -24,7 +24,7 @@ export const useNoteDraftStore = create<NoteDraftStore>()(
     {
       name: 'note draft',
       partialize: state => ({
-        note: state.draft,
+        draft: state.draft,
       }),
     }
   )

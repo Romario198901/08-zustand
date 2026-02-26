@@ -6,7 +6,7 @@ import { Metadata } from "next";
 interface SingleNoteProps {
   params: Promise<{ id: string }>;
 }
-export async function generateMetaData({params}: SingleNoteProps): Promise<Metadata> {
+export async function generateMetadata({params}: SingleNoteProps): Promise<Metadata> {
   const { id } = await params;
   const note = await fetchNoteById(id);
   return {

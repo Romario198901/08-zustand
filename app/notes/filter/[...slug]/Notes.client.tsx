@@ -7,14 +7,12 @@ import { useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import Pagination from '@/components/Pagination/Pagination';
 import NoteList from '@/components/NoteList/NoteList';
-import NoteForm from '@/components/NoteForm/NoteForm';
-import Modal from '@/components/Modal/Modal';
 import Link from 'next/link';
 
-interface NotesClientPriops {
+interface NotesClientProps {
   tag: string;
 }
-export default function NotesClient({ tag }: NotesClientPriops) {
+export default function NotesClient({ tag }: NotesClientProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
@@ -51,7 +49,9 @@ export default function NotesClient({ tag }: NotesClientPriops) {
           />
         )}
 
-        <Link href={'/notes/action/create'} className={css.button}>Create note +</Link>
+        <Link href={'/notes/action/create'} className={css.button}>
+          Create note +
+        </Link>
       </header>
       {isLoading && <p>Loading...</p>}
       {!isLoading && isFetching && <p>Updating...</p>}
